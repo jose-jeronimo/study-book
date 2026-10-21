@@ -1,0 +1,46 @@
+% !TEX program = pdflatex
+% !TEX root = main.tex
+% ============================================================
+%  @@TITLE@@
+%  Build: latexmk  (or: pdflatex -output-directory=build main.tex, twice)
+% ============================================================
+\documentclass[11pt,a4paper,twoside,openany]{book}
+\input{preamble}
+
+\begin{document}
+
+% ---------------- title page ----------------
+\begin{titlepage}
+  \thispagestyle{empty}
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[brand] (current page.north west) rectangle ([yshift=-9cm]current page.north east);
+  \end{tikzpicture}
+  \vspace*{1.2cm}
+  {\color{white}\sffamily
+   {\large @@COURSE_LINE@@\par}
+   \vspace{1.2cm}
+   {\fontsize{34}{40}\selectfont\bfseries @@SUBJECT@@\par}
+   \vspace{2mm}
+   {\fontsize{22}{28}\selectfont @@SUBTITLE@@\par}}
+  \vspace{2.4cm}
+  {\sffamily\large
+   \begin{tabular}{@{}ll@{}}
+@@TITLE_ROWS@@
+   \end{tabular}\par}
+  \vfill
+  {\sffamily\small\color{gray}
+   @@TITLE_NOTE@@\par}
+\end{titlepage}
+
+\frontmatter
+\tableofcontents
+\input{chapters/00-howto}
+\input{chapters/00-overview}
+
+\mainmatter
+@@BODY@@
+
+\appendix
+@@APPENDICES@@
+
+\end{document}

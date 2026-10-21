@@ -1,0 +1,51 @@
+% ============================================================
+\chapter{How to use this book}\label{howto:chapter}
+% ============================================================
+% Template: replace every @@...@@ block; delete rows/sections for features switched off in PLAN.md.
+
+\section*{The exam}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+@@EXAM_ROWS@@
+\bottomrule
+\end{tabularx}
+
+\section*{Structure}
+@@STRUCTURE_PARAGRAPH@@
+Each chapter opens with learning objectives and ends with take-home messages, a self-test and answers.
+The overview map on the next pages shows how the chapters build on each other.
+
+\section*{Box legend}
+\begin{examcritical}
+Facts and definitions you must be able to reproduce.
+\end{examcritical}
+\begin{tcolorbox}[studybox,colback=lecq!6,colframe=lecq,title={Lecturer question \#\hfill{\normalfont\footnotesize [Source page]}}]
+\textbf{\itshape ``A question highlighted by the lecturer in the material.''}\par\smallskip
+\textbf{Model answer.}\ A worked answer as you could write it in the exam.
+\end{tcolorbox}
+\begin{pitfall}
+Typical confusions between similar concepts.
+\end{pitfall}
+\begin{keyidea}
+The one idea a section hinges on.
+\end{keyidea}
+\begin{beyondslides}
+Context that is \emph{not} in the course material (textbooks, general knowledge). Useful for
+understanding, lower priority for memorising.
+\end{beyondslides}
+
+\section*{Source tags and how far to trust them}
+Grey tags such as \src{@@EXAMPLE_TAG@@}{12} point to the \emph{PDF page} of the original material:
+
+{\small\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+Tag & Source file\\
+\midrule
+@@TAG_ROWS@@
+\bottomrule
+\end{tabularx}}
+
+A tag says \emph{where} a statement comes from, not that it is correct. Numbers and formulas were
+matched against the text of the cited page; values that could not be confirmed (for example from
+scanned pages) are printed like \unsure{this} and listed in the corrections appendix.
+When a value matters for the exam, check it on the cited page.

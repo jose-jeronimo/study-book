@@ -1,0 +1,175 @@
+% ============================================================
+%  preamble.tex -- packages, colours, boxes and macros
+%  (study-book skill template; fill the @@...@@ placeholders)
+% ============================================================
+\usepackage[a4paper,inner=24mm,outer=34mm,top=24mm,bottom=26mm,
+            marginparwidth=24mm,marginparsep=3mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[@@BABEL_LANG@@]{babel}
+\usepackage{lmodern}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{textcomp}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\sisetup{range-phrase=\text{--},range-units=single,per-mode=symbol,
+         separate-uncertainty=true,group-minimum-digits=4}
+\usepackage{booktabs,tabularx,longtable,array,multirow}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\graphicspath{{figures/}}
+\usepackage{float}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,format=hang}
+\usepackage{subcaption}
+\usepackage[dvipsnames,table]{xcolor}
+\usepackage{enumitem}
+\setlist{itemsep=1pt,topsep=3pt,parsep=0pt}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{marginnote}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.symbols,
+  shapes.misc,calc,decorations.pathreplacing,fit,backgrounds,patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{listings}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{colorlinks=true,linkcolor=NavyBlue,urlcolor=NavyBlue,citecolor=NavyBlue,
+  pdftitle={@@TITLE@@},pdfauthor={@@AUTHOR@@}}
+\usepackage[nameinlink,capitalise]{cleveref}
+
+% ---------------- course-specific macros / units ----------------
+% (the main agent adds \DeclareSIUnit, \newcommand etc. from glossary.md here)
+@@COURSE_MACROS@@
+
+% ---------------- colours ----------------
+\definecolor{brand}{HTML}{1F4E79}
+\definecolor{critical}{HTML}{B3261E}
+\definecolor{lecq}{HTML}{C77700}
+\definecolor{beyond}{HTML}{5F6B73}
+\definecolor{pit}{HTML}{6A1B9A}
+\definecolor{flow}{HTML}{2E75B6}
+\definecolor{flowlight}{HTML}{DCE9F5}
+\definecolor{codebg}{HTML}{F6F8FA}
+\definecolor{unsure}{HTML}{E65100}
+
+% ---------------- headings ----------------
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\huge\bfseries\color{brand}\raggedright}
+  {\large\chaptertitlename\ \thechapter}{8pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-10pt}{24pt}
+\titleformat{\part}[display]{\centering\normalfont\sffamily\Huge\bfseries\color{brand}}
+  {\LARGE\partname\ \thepart}{18pt}{}
+\titleformat{\section}{\raggedright\normalfont\sffamily\Large\bfseries\color{brand}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\raggedright\normalfont\sffamily\large\bfseries\color{brand!85!black}}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\normalfont\sffamily\normalsize\bfseries}{\thesubsubsection}{0.8em}{}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{1}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\sffamily\small\leftmark}
+\fancyhead[RO]{\sffamily\small\rightmark}
+\fancyfoot[LE,RO]{\sffamily\small\thepage}
+\fancyfoot[C]{\sffamily\scriptsize\color{gray}@@FOOTER@@}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\headheight}{16pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{3em}
+\raggedbottom
+\setlength{\parskip}{4pt plus 1pt}
+\renewcommand{\arraystretch}{1.18}
+
+% ---------------- boxes ----------------
+\tcbset{studybox/.style={enhanced,breakable,boxrule=0.6pt,arc=2pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,fonttitle=\sffamily\bfseries\small,
+  before skip=8pt,after skip=8pt}}
+
+\newtcolorbox{examcritical}[1][]{studybox,colback=critical!5,colframe=critical,
+  title={\textbf{!}\ \ Exam-critical#1}}
+\newtcolorbox{beyondslides}[1][]{studybox,colback=beyond!6,colframe=beyond,
+  title={Beyond the sources#1},fontupper=\small}
+\newtcolorbox{pitfall}[1][]{studybox,colback=pit!5,colframe=pit,
+  title={Pitfall / common confusion#1}}
+\newtcolorbox{keyidea}[1][]{studybox,colback=brand!5,colframe=brand,
+  title={Key idea#1}}
+
+% Inline citation of a source page: \src{TAG}{23}, \src{TAG}{23--25}, \src{TAG}{3,7}
+\newcommand{\src}[2]{\unskip\nobreak\hspace{0.4em}{\sffamily\scriptsize\color{gray}[#1~#2]}}
+
+% Lecturer (highlighted) question with worked answer.
+% \begin{lecturerq}{<key>:label}{Question text}{TAG}{page} ... answer ... \end{lecturerq}
+\newcounter{lecq}
+\newenvironment{lecturerq}[4]{%
+  \refstepcounter{lecq}\label{lq:#1}%
+  \begin{tcolorbox}[studybox,colback=lecq!6,colframe=lecq,
+    title={Lecturer question \thelecq\hfill{\normalfont\footnotesize [#3~#4]}}]
+  \textbf{\itshape ``#2''}\par\smallskip
+  \textbf{Model answer.}\ }{\end{tcolorbox}}
+
+% A value that could not be confirmed (second read disagreed / unreadable source).
+% \unsure{1.5 kV}  -> printed in orange with a warning mark; listed in the corrections appendix
+\newcommand{\unsure}[1]{{\color{unsure}#1\textsuperscript{\,\textbf{?!}}}}
+
+% Learning objectives at chapter start
+\newenvironment{objectives}{%
+  \begin{tcolorbox}[studybox,colback=white,colframe=brand!50,
+     title={After this chapter you can\ldots}]\begin{itemize}[leftmargin=1.2em]}%
+  {\end{itemize}\end{tcolorbox}}
+
+% Take-home, self-test and answers
+\newcommand{\takehome}{\section*{Take-home messages}}
+\newcommand{\selftest}{\section*{Self-test}}
+\newenvironment{answers}{\subsection*{Answers}\small\begin{enumerate}[label=\arabic*.]}{\end{enumerate}}
+
+% ---------------- code (notebooks) ----------------
+\lstdefinestyle{book}{basicstyle=\ttfamily\footnotesize,breaklines=true,columns=fullflexible,
+  keepspaces=true,showstringspaces=false,commentstyle=\color{gray}\itshape,
+  keywordstyle=\color{brand}\bfseries,stringstyle=\color{critical!80!black},
+  upquote=true,literate={-}{-}1}
+% \begin{codebox}[Python]{Title} ... \end{codebox}
+\newtcblisting{codebox}[2][Python]{studybox,colback=codebg,colframe=flow!60,
+  listing only,listing options={style=book,language=#1},title={\ttfamily #2}}
+
+% ---------------- workflow chevrons ----------------
+% \workflow{Step 1,Step 2,Step 3}
+\tikzset{wfstep/.style={signal,signal to=east,signal from=west,draw=flow,
+   fill=flowlight,text=brand,font=\sffamily\scriptsize\bfseries,
+   minimum height=9mm,inner xsep=5pt,align=center,text width=#1},
+   wfstep/.default=16mm}
+\newcommand{\workflow}[2][]{%
+  \foreach \s [count=\n] in {#2}{\xdef\wfn{\n}}%
+  \pgfmathsetlengthmacro\wfw{min(24mm,(\linewidth-\wfn*10mm)/\wfn)}%
+  \begin{center}\begin{adjustbox}{max width=\linewidth}\begin{tikzpicture}[node distance=1.2mm]
+  \foreach \s [count=\i] in {#2}{%
+    \ifnum\i=1 \node[wfstep=\wfw] (w\i) {\s};
+    \else \pgfmathtruncatemacro\prev{\i-1}\node[wfstep=\wfw,right=of w\prev] (w\i) {\s};\fi}
+  \end{tikzpicture}\end{adjustbox}\end{center}}
+
+% ---------------- overview map ----------------
+% solid arrow = dependency stated in the sources; dashed = inferred by the editor
+\tikzset{
+  ovpart/.style={draw=brand,fill=brand!8,rounded corners=3pt,inner sep=6pt},
+  ovchap/.style={draw=flow,fill=flowlight,rounded corners=2pt,font=\sffamily\scriptsize\bfseries,
+     text=brand,align=center,text width=30mm,minimum height=9mm},
+  ovdep/.style={-{Stealth[length=2mm]},thick,brand},
+  ovinf/.style={-{Stealth[length=2mm]},thick,brand!60,dashed},
+}
+
+% ---------------- misc helpers ----------------
+\newcommand{\ie}{i.e.\ }
+\newcommand{\eg}{e.g.\ }
+\crefname{lecq}{lecturer question}{lecturer questions}
+\Crefname{lecq}{Lecturer question}{Lecturer questions}
+
+% Blank verso pages (two-sided layout) carry no header/footer
+\makeatletter
+\renewcommand{\cleardoublepage}{\clearpage\if@twoside\ifodd\c@page\else
+  \hbox{}\thispagestyle{empty}\newpage\fi\fi}
+\makeatother

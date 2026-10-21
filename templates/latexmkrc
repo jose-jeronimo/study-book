@@ -1,0 +1,5 @@
+# copy to .latexmkrc in the book folder;  run: latexmk
+$pdf_mode = 1;
+$out_dir  = 'build';
+$pdflatex = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error %O %S';
+@default_files = ('main.tex');

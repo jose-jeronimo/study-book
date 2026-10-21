@@ -1,0 +1,37 @@
+% ============================================================
+\chapter{Overview: how the course fits together}\label{overview:chapter}
+% ============================================================
+% Template. The main agent replaces the example map with the real one from PLAN.md:
+%  - one ovchap node per chapter (name it c<NN>), grouped in an ovpart frame per part
+%  - layered top-to-bottom (or left-to-right) by dependency depth: foundations first
+%  - ovdep = dependency stated in the sources; ovinf = inferred by the editor (dashed)
+%  - keep it on ONE page: \resizebox / adjustbox max height if needed
+@@INTRO_PARAGRAPH@@
+
+\begin{center}
+\begin{adjustbox}{max width=\linewidth,max height=0.72\textheight}
+\begin{tikzpicture}[node distance=7mm and 6mm]
+  % ---- example, replace ----
+  \node[ovchap] (c01) {1\\Foundations};
+  \node[ovchap,below left=of c01] (c02) {2\\Method A};
+  \node[ovchap,below right=of c01] (c03) {3\\Method B};
+  \node[ovchap] (c04) at ([yshift=-20mm]$(c02)!0.5!(c03)$) {4\\Application};
+  \begin{scope}[on background layer]
+    \node[ovpart,fit=(c01)(c02)(c03),label={[font=\sffamily\scriptsize\bfseries,text=brand]north:Part I}] {};
+  \end{scope}
+  \draw[ovdep] (c01) -- (c02);
+  \draw[ovdep] (c01) -- (c03);
+  \draw[ovinf] (c02) -- (c04);
+  \draw[ovdep] (c03) -- (c04);
+  % ---- end example ----
+\end{tikzpicture}
+\end{adjustbox}
+\end{center}
+
+\begin{center}\small
+\tikz[baseline=-0.5ex]\draw[ovdep] (0,0)--(0.8,0); dependency stated in the course material\qquad
+\tikz[baseline=-0.5ex]\draw[ovinf] (0,0)--(0.8,0); dependency inferred by the editor
+\end{center}
+
+\section*{Reading paths}
+@@READING_PATHS@@

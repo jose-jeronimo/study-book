@@ -1,0 +1,11 @@
+# local development history (kept on the author's machine, not distributed)
+DESIGN.md
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# testing feedback and change log (kept on the author's machine, not distributed)
+/FEEDBACK.md
+/feedback/
